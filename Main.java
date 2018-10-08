@@ -1,13 +1,26 @@
 import java.util.*;
 
 public class Main{
+
     public static void main(String[] args) {
-        Stack<NFA> myStack = new Stack();
-        int state = 0;
+        Start();
+    }
+
+    public static void Start(){
         System.out.println("Type regular expression in postfix: ");
-        Scanner reader = new Scanner(System.in);
+        Scanner reader;
+        reader = new Scanner(System.in);
         String str = reader.nextLine();
-        for(int i = 0; i < str.length(); i ++){
+        Case(str);
+    }
+
+    public static void Case(String str){
+        int state = 0;
+        Stack<NFA> myStack;
+        myStack = new Stack<NFA>();
+        int i = 0;
+        while (true) {
+            if (i >= str.length()) break;
             char letter = str.charAt(i);
             if (letter == '*'){
                 NFA star = myStack.pop();
@@ -24,14 +37,16 @@ public class Main{
                 NFA var1 = myStack.pop();
                 NFA var2 = myStack.pop();
                 NFA union = NFA.union(var1, var2, state);
-                myStack.push(union); 
+                myStack.push(union);
             } else{
                 NFA alphaL = NFA.alphaLetter(letter, state);
                 myStack.push(alphaL);
                 state += 2;
             }
+            i++;
         }
-        NFA last = myStack.pop();
+        NFA last;
+        last = myStack.pop();
         last.printNFA();
     }
 }
