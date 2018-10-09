@@ -24,6 +24,7 @@ public class NFA {
 		System.out.println("Final State is Q" + this.finalState);
 		morePrinting();
 	}
+	
 	public void morePrinting(){
 		int j = this.listState.size(), i = 0;
 		while (i < j) {
