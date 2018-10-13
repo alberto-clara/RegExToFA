@@ -13,8 +13,8 @@ public class NFA {
 	static public NFA alphaLetter(char letter, int state) {
 		NFA alphaL;
 		alphaL = new NFA(state, state+1);
-		alphaL.listState.add(new Node(state,true,false));
-		alphaL.listState.add(new Node(state+1,false,true));
+		alphaL.listState.add(new Node(state));
+		alphaL.listState.add(new Node(state+1));
 		alphaL.listState.getFirst().transitionList.add(new Transitions(state, letter, state+1));
 		return alphaL;
 	}
@@ -41,7 +41,7 @@ public class NFA {
 
 	static public NFA append(NFA var1, NFA var2){
 		var1.listState.getLast().transitionList.add(new Transitions(var1.finalState, 'E', var2.startState));
-		var1.listState.getLast().isFinal = false;
+		//var1.listState.getLast().isFinal = false;
 		  
 		NFA temp;
 		temp = new NFA (var1.startState, var2.finalState);
@@ -53,14 +53,14 @@ public class NFA {
 	public static NFA union(NFA var1, NFA var2, int state) {
 		NFA temp;
 		temp = new NFA(state, state+1);
-		temp.listState.add(new Node(state,true,false));
+		temp.listState.add(new Node(state));
 		temp.listState.getFirst().transitionList.add(new Transitions(state, 'E',var1.startState));
 		temp.listState.getFirst().transitionList.add(new Transitions(state, 'E',var2.startState));
 		var1.listState.getLast().transitionList.add(new Transitions(var1.finalState, 'E', temp.finalState));
 		var2.listState.getLast().transitionList.add(new Transitions(var2.finalState, 'E', temp.finalState));
 		temp.listState.addAll(var1.listState);
 		temp.listState.addAll(var2.listState);
-		temp.listState.add(new Node(state+1,false,true));
+		temp.listState.add(new Node(state+1));
 		return temp;
 	}
 
@@ -69,10 +69,9 @@ public class NFA {
 		temp = new NFA ( state, state);
 		star.listState.getLast().transitionList.add(new Transitions(star.finalState, 'E', temp.finalState));
 		temp.listState.addAll(star.listState);
-		temp.listState.add(new Node(state,true,true));
+		temp.listState.add(new Node(state));
 		temp.listState.getLast().transitionList.add(new Transitions(state, 'E', star.startState));
 		return temp;
 	}
 
 }
-

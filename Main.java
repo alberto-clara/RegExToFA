@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;  
 
 public class Main{
 
@@ -7,11 +8,25 @@ public class Main{
     }
 
     public static void Start(){
-        System.out.println("Type regular expression in postfix: ");
-        Scanner reader;
-        reader = new Scanner(System.in);
-        String str = reader.nextLine();
-        Case(str);
+        try{
+        FileInputStream fstream = new FileInputStream("test.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+        String strLine;
+        int i = 0;
+        while ((strLine = br.readLine()) != null) {
+            // Print the content on the console
+            System.out.println("Test number: " + i);
+            System.out.println (strLine);
+            i++;
+            Case(strLine);
+        }
+        }catch(Exception e){System.out.println(e);}    
+
+        // System.out.println("Type regular expression in postfix: ");
+        // Scanner reader;
+        // reader = new Scanner(System.in);
+        // String str = reader.nextLine();
+        // Case(str);
     }
 
     public static void Case(String str){
